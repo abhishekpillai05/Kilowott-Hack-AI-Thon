@@ -196,20 +196,3 @@ npm run build
 | `GET` | `/api/reports/audit-log` | Tamper-evident audit trail of catalog events |
 
 ---
-
-## 🏆 Hackathon Judging Alignment
-
-| Judging Criterion | CatalogPilot AI Implementation |
-| :--- | :--- |
-| **1. AI Tool Usage** | Configurable Google Gemini integration with typed prompt schemas, fallback demo fixtures, and bounded execution retries. |
-| **2. Codebase Quality** | Clean TypeScript monorepo, shared Zod contracts, 19 passing tests, zero committed secrets, and strict error handling. |
-| **3. Documentation** | Comprehensive architecture documentation, interactive Swagger-ready endpoints, and reproducible setup instructions. |
-| **4. Video Presentation** | Reliable, predictable 2-minute demo workflow with seeded data, visible before/after diffs, and health metrics. |
-| **5. Agentic AI** | 4 specialized deterministic and LLM agent nodes with formal handoffs, claim validation, and post-apply database verification. |
-| **6. Execution Quality** | Responsive, modern dark-mode glassmorphic UI, real-time health scoring, and resilient SQLite persistence. |
-
----
-
-## 📄 License
-
-MIT © 2026 CatalogPilot AI Team. Built for the Kilowott AI Hackathon.
