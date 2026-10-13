@@ -77,9 +77,14 @@ export function calculateHealthScore(product: ProductForScoring): HealthScoreBre
   }
 
   // ── Media (20 pts) ────────────────────────────────────────────────────────
-  const images = product.images ?? [];
-  const imagesWithSrc = images.filter((i) => i.src && i.src.trim() !== '');
-  const imagesWithAlt = imagesWithSrc.filter((i) => i.alt && i.alt.trim() !== '');
+  const rawImages = product.images;
+  const images = Array.isArray(rawImages)
+    ? rawImages
+    : typeof rawImages === 'string'
+      ? safeJsonArray(rawImages)
+      : [];
+  const imagesWithSrc = images.filter((i) => i && i.src && String(i.src).trim() !== '');
+  const imagesWithAlt = imagesWithSrc.filter((i) => i && i.alt && String(i.alt).trim() !== '');
 
   if (imagesWithSrc.length >= 3) {
     breakdown.media += 12;
@@ -95,7 +100,12 @@ export function calculateHealthScore(product: ProductForScoring): HealthScoreBre
   }
 
   // ── Attributes (15 pts) ───────────────────────────────────────────────────
-  const attrs = product.attributes ?? [];
+  const rawAttrs = product.attributes;
+  const attrs = Array.isArray(rawAttrs)
+    ? rawAttrs
+    : typeof rawAttrs === 'string'
+      ? safeJsonArray(rawAttrs)
+      : [];
   if (attrs.length >= 4) {
     breakdown.attributes = 15;
   } else if (attrs.length >= 2) {
@@ -138,6 +148,15 @@ function stripHtml(html: string): string {
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function safeJsonArray(val: string): any[] {
+  try {
+    const parsed = JSON.parse(val);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
 
 export function scoreLabel(score: number): string {

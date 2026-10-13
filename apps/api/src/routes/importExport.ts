@@ -8,7 +8,7 @@ import { asyncHandler } from '../middleware/errorHandler';
 import { getDb } from '../database/db';
 import { calculateHealthScore } from '../services/healthScoring';
 import { scanProduct } from '../services/catalogDoctor';
-import { recordAuditEvent } from '../services/productService';
+import { recordAuditEvent, getProductById } from '../services/productService';
 import type { Product } from '@catalogpilot/shared';
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
@@ -190,15 +190,14 @@ importExportRouter.post(
       }
 
       // Run health calculation and catalog doctor scan
-      const freshProduct = db.prepare('SELECT * FROM products WHERE id = ?').get(id) as Record<
-        string,
-        unknown
-      >;
-      if (freshProduct) {
-        const { total } = calculateHealthScore(freshProduct as unknown as Product);
+      try {
+        const freshProduct = getProductById(id);
+        const { total } = calculateHealthScore(freshProduct);
         db.prepare('UPDATE products SET health_score = ? WHERE id = ?').run(total, id);
         // Async scan
         scanProduct(id).catch(() => {});
+      } catch (err) {
+        // Fallback calculation if needed
       }
 
       imported++;

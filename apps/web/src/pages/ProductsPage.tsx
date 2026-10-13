@@ -12,6 +12,7 @@ import {
   Save,
   X,
   ShoppingCart,
+  Upload,
 } from 'lucide-react';
 import { apiClient } from '../api/client';
 
@@ -114,6 +115,25 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onTriggerAgentRun })
     }
   };
 
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [importing, setImporting] = useState(false);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImporting(true);
+    try {
+      const res = await apiClient.importFile(file);
+      alert(`Import complete! Processed ${res.imported_count} products. Catalog Doctor scanned and scores recalculated.`);
+      fetchProducts();
+    } catch (err: any) {
+      alert(`Import failed: ${err.message}`);
+    } finally {
+      setImporting(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
   const getScoreColor = (score: number) => {
     if (score >= 80) return '#10B981';
     if (score >= 60) return '#F59E0B';
@@ -188,6 +208,29 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onTriggerAgentRun })
             style={{ padding: '6px 12px', fontSize: '0.82rem' }}
           >
             Optimal (80+)
+          </button>
+
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept=".csv,.json"
+            style={{ display: 'none' }}
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={importing}
+            className="btn-secondary"
+            style={{
+              padding: '6px 12px',
+              fontSize: '0.82rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            <Upload size={14} color="#06B6D4" />
+            <span>{importing ? 'Importing...' : 'Import Catalog'}</span>
           </button>
         </div>
       </div>

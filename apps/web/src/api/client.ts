@@ -142,4 +142,18 @@ export const apiClient = {
     const res = await api.post('/copilot/chat', { message, product_id: productId });
     return res.data;
   },
+
+  // Import / Export
+  importFile: async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await api.post('/import-export/import', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return res.data;
+  },
+  importJson: async (products: any[]) => {
+    const res = await api.post('/import-export/import', { products });
+    return res.data;
+  },
 };
