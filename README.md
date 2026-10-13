@@ -172,24 +172,6 @@ npm run build
 
 ---
 
-## 🎬 Two-Minute Demo Script
-
-Follow these steps for a live presentation:
-
-1. **Dashboard Overview**: Open [http://localhost:5173/](http://localhost:5173/). Notice the overall **Catalog Health Score (75/100)** and header status pill (**`DEMO MODE`**).
-2. **Catalog Doctor**: Click **Catalog Doctor** in the sidebar. Click **"Diagnose Catalog"** to demonstrate real-time deterministic audits across all products.
-3. **Inspect Problem Product**: Select **`Laptop Stand` (`prod-repair-demo`)** with 5 active issues. Click **"Fix with AI"** on the *Missing short description* issue.
-4. **Agent Studio**: Navigate to **Agents**. Observe the live execution trace:
-   - **Auditor**: Isolated the missing short description (2ms).
-   - **Enrichment**: Formulated copy grounded in product specifications (727ms).
-   - **Validation**: Verified length bounds and scanned for unsupported claims (1ms).
-   - **Status**: Transitioned to `awaiting_approval` — SQLite database was **not mutated**.
-5. **Approval Gate**: Navigate to **Approvals**. View the side-by-side diff comparing the empty short description to the generated copy. Click **"Approve & Apply"**.
-6. **Audit & Verification**: Navigate to **Reports & Audit**. Confirm the independent **Verification Agent** confirmed the persisted SQLite state and updated the audit log.
-7. **Negative Test (Unsupported Claims)**: Highlight that proposals claiming *"FDA certified with lifetime warranty"* are automatically flagged with `risk_level: high` and held for operator inspection.
-8. **Catalog Export**: Click **"Export CSV"** or **"Export JSON"** in the top-right of Reports to demonstrate ready-to-publish catalog syndication.
-
----
 
 ## 📡 REST API Reference
 
