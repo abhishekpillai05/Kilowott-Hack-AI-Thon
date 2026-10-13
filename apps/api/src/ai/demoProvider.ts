@@ -33,6 +33,19 @@ export class DemoProvider implements AIProvider {
   private pickResponse(prompt: string): string {
     const lower = prompt.toLowerCase();
 
+    if (lower.includes('short_description') && lower.includes('laptop stand')) {
+      return JSON.stringify({
+        proposed_value:
+          'Ergonomic adjustable aluminium laptop stand with 6 height positions and non-slip cooling design — compatible with 11"–17" laptops.',
+        reason:
+          'Concise summary capturing the key differentiators: material, adjustability, and compatibility range.',
+        evidence: { source_name: 'Laptop Stand', source_sku: 'LP-STAND-ADJ' },
+        confidence: 0.78,
+        missing_evidence: null,
+        warnings: [],
+      });
+    }
+
     if (lower.includes('description') && lower.includes('laptop stand')) {
       return JSON.stringify({
         proposed_value: `<p>The AdjustaRise Laptop Stand brings your screen to a comfortable, ergonomic eye level, reducing neck and shoulder strain during extended work sessions. The six-level height adjustment (15–35 cm) and multi-angle tilt (15°–45°) let you dial in the perfect viewing position whether you're sitting, standing, or using an external keyboard.</p>
@@ -58,19 +71,6 @@ export class DemoProvider implements AIProvider {
         missing_evidence:
           'Exact height range, weight capacity, and compatible laptop sizes should be confirmed from the supplier spec sheet.',
         warnings: ['Specifications are inferred from product class — verify before publishing.'],
-      });
-    }
-
-    if (lower.includes('short_description') && lower.includes('laptop stand')) {
-      return JSON.stringify({
-        proposed_value:
-          'Ergonomic adjustable aluminium laptop stand with 6 height positions and non-slip cooling design — compatible with 11"–17" laptops.',
-        reason:
-          'Concise summary capturing the key differentiators: material, adjustability, and compatibility range.',
-        evidence: { source_name: 'Laptop Stand', source_sku: 'LP-STAND-ADJ' },
-        confidence: 0.78,
-        missing_evidence: null,
-        warnings: [],
       });
     }
 
