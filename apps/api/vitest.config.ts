@@ -12,5 +12,6 @@ export default defineConfig({
       exclude: ['dist/**', '**/*.test.ts', 'src/database/seed.ts'],
     },
     setupFiles: ['./src/__tests__/setup.ts'],
+    pool: 'forks',
   },
 });
