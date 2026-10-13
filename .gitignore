@@ -1,0 +1,48 @@
+# ── OS / editors ──────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/settings.json
+.idea/
+
+# ── Node ──────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log
+.npm/
+
+# ── Build outputs ─────────────────────────────
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# ── Secrets & environment files ───────────────
+.env
+.env.local
+.env.*.local
+apps/api/.env
+apps/web/.env.local
+
+# ── Database files (never commit) ─────────────
+apps/api/data/
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# ── Coverage & test artefacts ─────────────────
+coverage/
+playwright-report/
+test-results/
+*.snap
+
+# ── Logs ──────────────────────────────────────
+logs/
+*.log
+
+# ── Misc ──────────────────────────────────────
+.cache/
+tmp/
